@@ -1,11 +1,9 @@
-# Minimal Vector configuration — console output only
-data_dir = "{{ vector_data_dir }}"
+data_dir = "/var/lib/vector"
 
 [api]
 enabled = true
-address = "127.0.0.1:{{ vector_api_port }}"
+address = "127.0.0.1:8686"
 
-# Источник: читаем системные логи (syslog и auth.log)
 [sources.system_logs]
 type = "file"
 include = [
@@ -13,9 +11,8 @@ include = [
   "/var/log/auth.log"
 ]
 read_from = "end"
-batch_size = 1024
+# batch_size удалён — больше не нужен
 
-# Приёмник: вывод всех логов в консоль в формате JSON
 [sinks.console_output]
 type = "console"
 inputs = ["system_logs"]
